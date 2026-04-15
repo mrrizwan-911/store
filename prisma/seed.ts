@@ -1,7 +1,14 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 import bcrypt from 'bcryptjs'
+import path from 'path'
+import { loadEnvConfig } from '@next/env'
 
-const db = new PrismaClient()
+// Load .env.local
+loadEnvConfig(path.resolve(__dirname, '..'))
+
+const adapter = new PrismaPg({ connectionString: process.env.DIRECT_URL! })
+const db = new PrismaClient({ adapter })
 
 async function main() {
   // Create admin user — password must be changed on first login
