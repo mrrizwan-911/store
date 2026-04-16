@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     )
   } catch (err) {
-    logger.error('Register failed', err)
+    logger.error('[AUTH_REGISTER]', err)
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

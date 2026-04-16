@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       data: { message: 'Email verified successfully' },
     })
   } catch (err) {
-    logger.error('OTP verification failed', err)
+    logger.error('[AUTH_VERIFY_OTP]', err)
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

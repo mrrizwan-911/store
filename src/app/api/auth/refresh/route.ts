@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
 
     return response
   } catch (err) {
-    logger.error('Token refresh failed', err)
+    logger.error('[AUTH_REFRESH]', err)
     return NextResponse.json({ success: false, error: 'Invalid refresh token' }, { status: 401 })
   }
 }
