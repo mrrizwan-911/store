@@ -47,24 +47,24 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinkStyles = "relative text-[11px] font-medium uppercase tracking-[0.3em] text-gray-800 hover:text-black transition-colors font-sans after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-full after:origin-center after:scale-x-0 after:bg-black after:transition-transform after:duration-400 hover:after:scale-x-100"
+  const navLinkStyles = "relative text-[11px] font-medium uppercase tracking-[0.2em] text-gray-800 hover:text-black transition-colors font-sans after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-full after:origin-center after:scale-x-0 after:bg-black after:transition-transform after:duration-500 hover:after:scale-x-100"
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full transition-all duration-300 border-b border-gray-100 bg-white/95 backdrop-blur-xl",
-      isScrolled ? "py-1" : "py-2"
+      "sticky top-0 z-50 w-full transition-all duration-500 bg-white/98 backdrop-blur-md",
+      isScrolled ? "py-1 border-b border-gray-100" : "py-3"
     )}>
       <div className="mx-auto max-w-7xl px-8">
-        <div className="flex h-[40px] items-center gap-6">
+        <div className="flex h-[32px] items-center justify-between gap-12">
 
           {/* Logo Area */}
           <Link href="/" className="shrink-0 group cursor-pointer flex items-center">
-            <span className="font-serif text-2xl font-bold tracking-[0.1em] text-black uppercase transition-all group-hover:tracking-[0.15em] leading-none">
+            <span className="font-serif text-2xl font-medium tracking-[0.2em] text-black uppercase transition-all group-hover:tracking-[0.25em] leading-none">
               STORE
             </span>
           </Link>
 
-          {/* Desktop Nav (Boxless & Minimalist) */}
+          {/* Desktop Nav (Pure Text & Minimalist) */}
           <div className="hidden flex-1 justify-center lg:flex">
             <nav className="flex items-center gap-12">
               {NAV_CATEGORIES.map(cat => (
@@ -77,50 +77,32 @@ export function Navbar() {
                   <Link href={cat.href} className={navLinkStyles}>
                     {cat.label}
                   </Link>
-
-                  {activeCategory === cat.label && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
-                      <div className="bg-white border border-gray-100 p-5 min-w-[200px] shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                        <div className="flex flex-col gap-3">
-                          {cat.sub.map(sub => (
-                            <Link
-                              key={sub}
-                              href={`${cat.href}/${sub.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="text-[12px] text-neutral-500 hover:text-black hover:translate-x-1 transition-all"
-                            >
-                              {sub}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </nav>
           </div>
 
-          {/* Right Icons (No Boxes, Increased Size) */}
-          <div className="ml-auto flex items-center gap-6">
-            <button className="hidden items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-600 hover:text-black transition-all md:inline-flex font-sans" aria-label="Search">
-              <Search className="h-5 w-5" />
+          {/* Right Icons (No Boxes, Clean Icons) */}
+          <div className="flex items-center gap-8">
+            <button className="hidden items-center gap-2.5 text-[10px] uppercase tracking-[0.2em] text-gray-600 hover:text-black transition-all md:inline-flex font-sans font-bold" aria-label="Search">
+              <Search className="h-5 w-5 stroke-[1.5]" />
               Search
             </button>
-            <div className="flex items-center gap-5">
-              <Link href="/wishlist" className="text-gray-600 hover:text-black transition-all" aria-label="Wishlist">
-                <Heart className="h-5 w-5" />
+            <div className="flex items-center gap-6">
+              <Link href="/wishlist" className="text-gray-600 hover:text-black hover:opacity-70 transition-all" aria-label="Wishlist">
+                <Heart className="h-5 w-5 stroke-[1.5]" />
               </Link>
-              <Link href={isAuthenticated ? '/account' : '/login'} className="text-gray-600 hover:text-black transition-all" aria-label="Account">
-                <User className="h-5 w-5" />
+              <Link href={isAuthenticated ? '/account' : '/login'} className="text-gray-600 hover:text-black hover:opacity-70 transition-all" aria-label="Account">
+                <User className="h-5 w-5 stroke-[1.5]" />
               </Link>
               <button
                 onClick={() => dispatch(toggleCart())}
-                className="relative text-gray-600 hover:text-black transition-all"
+                className="relative text-gray-600 hover:text-black hover:opacity-70 transition-all"
                 aria-label={`Cart with ${cartCount} items`}
               >
-                <ShoppingCart className="h-5 w-5" />
+                <ShoppingCart className="h-5 w-5 stroke-[1.5]" />
                 {cartCount > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-3.5 w-3.5 items-center justify-center bg-black text-[8px] font-bold text-white">
+                  <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center bg-black text-[8px] font-bold text-white rounded-none">
                     {cartCount}
                   </span>
                 )}

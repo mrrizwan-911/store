@@ -66,21 +66,23 @@ export function ProductCard({
 
   return (
     <div
-      className="group relative bg-white border border-border hover:border-black/20 transition-all duration-500"
+      className="group relative bg-white rounded-none transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Container */}
-      <Link href={`/products/${slug}`} className="relative block aspect-[4/5] overflow-hidden">
-        <Image
-          src={(isHovered && secondaryImageUrl) ? secondaryImageUrl : imageUrl}
-          alt={name}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#FAFAFA]">
+        <Link href={`/products/${slug}`} className="block h-full w-full">
+          <Image
+            src={(isHovered && secondaryImageUrl) ? secondaryImageUrl : imageUrl}
+            alt={name}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+          />
+        </Link>
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 pointer-events-none">
           {isBadgeNew && (
             <span className="bg-black text-white text-[9px] font-bold uppercase tracking-widest px-2 py-1">
               New
@@ -94,12 +96,12 @@ export function ProductCard({
         </div>
 
         {/* Action Icons Overlay */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
           <button
             onClick={handleWishlist}
             className={cn(
-              "w-9 h-9 flex items-center justify-center bg-white border border-border hover:bg-black hover:text-white transition-all",
-              isInWishlist && "bg-black text-white border-black"
+              "w-9 h-9 flex items-center justify-center bg-white/90 border-none transition-all hover:bg-black hover:text-white shadow-sm",
+              isInWishlist && "bg-black text-white"
             )}
             aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
@@ -107,51 +109,62 @@ export function ProductCard({
           </button>
           <button
             onClick={handleAddToCart}
-            className="w-9 h-9 flex items-center justify-center bg-white border border-border hover:bg-black hover:text-white transition-all"
+            className="w-9 h-9 flex items-center justify-center bg-white/90 border-none transition-all hover:bg-black hover:text-white shadow-sm"
             aria-label="Add to cart"
           >
             <ShoppingBag className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Low Stock Indicator */}
-        {isLowStock && (
-          <div className="absolute bottom-0 left-0 right-0 bg-[#E8A838]/90 py-1 text-center">
-            <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-white">
-              Only {stockCount} left!
-            </p>
-          </div>
-        )}
-      </Link>
+        {/* Quick Add Button */}
+        <button
+          onClick={handleAddToCart}
+          className="absolute bottom-0 left-0 right-0 bg-white py-3 text-[10px] font-bold uppercase tracking-[0.15em] transition-transform duration-300 translate-y-full group-hover:translate-y-0 border-t border-black/5 hover:bg-black hover:text-white"
+        >
+          Quick Add — PKR {(salePrice || price).toLocaleString()}
+        </button>
+      </div>
 
       {/* Product Details */}
-      <div className="p-4 flex flex-col gap-1.5">
-        <div className="flex justify-between items-start">
-          <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
+      <div className="pt-4 pb-2 flex flex-col gap-1">
+        <div className="flex justify-between items-center">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">
             {category}
           </span>
           {avgRating && (
             <div className="flex items-center gap-1">
-              <Star className="w-2.5 h-2.5 fill-[#E8D5B0] text-[#E8D5B0]" />
-              <span className="text-[10px] font-medium">{avgRating}</span>
+              <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+              <span className="text-[10px] font-bold text-black">{avgRating}</span>
             </div>
           )}
         </div>
 
         <Link href={`/products/${slug}`} className="block">
-          <h3 className="font-display text-sm font-semibold uppercase tracking-tight group-hover:text-neutral-600 transition-colors">
+          <h3 className="font-display text-lg md:text-xl font-medium tracking-tight group-hover:text-neutral-600 transition-colors">
             {name}
           </h3>
         </Link>
 
-        <div className="flex items-center gap-2 mt-1">
-          {salePrice ? (
-            <>
-              <span className="text-sm font-bold text-black">PKR {salePrice.toLocaleString()}</span>
-              <span className="text-xs text-neutral-400 line-through">PKR {price.toLocaleString()}</span>
-            </>
-          ) : (
-            <span className="text-sm font-bold text-black">PKR {price.toLocaleString()}</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {salePrice ? (
+              <>
+                <span className="text-sm font-bold text-black font-sans">PKR {salePrice.toLocaleString()}</span>
+                <span className="text-xs text-neutral-400 line-through font-sans">PKR {price.toLocaleString()}</span>
+              </>
+            ) : (
+              <span className="text-sm font-bold text-black font-sans">PKR {price.toLocaleString()}</span>
+            )}
+          </div>
+
+          {/* Low Stock Indicator */}
+          {isLowStock && (
+            <div className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              <span className="text-[10px] text-amber-700 font-bold uppercase tracking-wider">
+                Only {stockCount} left
+              </span>
+            </div>
           )}
         </div>
       </div>

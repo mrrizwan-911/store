@@ -5,13 +5,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 
+import heroBoutique from '@/assets/images/hero-boutique.jpg'
+import heroAccessories from '@/assets/images/hero-accessories.jpg'
+
 const SLIDES = [
   {
-    image: '/images/hero-boutique.jpg',
+    image: heroBoutique,
     title: 'Boutique',
   },
   {
-    image: '/images/hero-accessories.jpg',
+    image: heroAccessories,
     title: 'Accessories',
   },
 ]

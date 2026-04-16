@@ -18,51 +18,50 @@ export function NewsletterSection() {
   }
 
   return (
-    <section className="py-24 bg-white border-t border-border">
+    <section className="py-32 bg-white">
       <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
-        <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold mb-6 block">
+        <span className="text-[10px] uppercase tracking-[0.6em] text-neutral-400 font-bold mb-8 block">
           Stay Connected
         </span>
 
         {isSubmitted ? (
-          <div className="animate-in fade-in zoom-in duration-500">
-            <CheckCircle2 className="w-16 h-16 text-black mx-auto mb-6" />
-            <h2 className="font-display text-3xl md:text-4xl font-medium uppercase mb-4 tracking-tight">
+          <div className="animate-in fade-in zoom-in duration-700">
+            <CheckCircle2 className="w-16 h-16 text-black mx-auto mb-8 stroke-[1]" />
+            <h2 className="font-display text-4xl md:text-5xl font-medium uppercase mb-6 tracking-tight">
               You&apos;re on the list
             </h2>
-            <p className="text-neutral-500 max-w-md mx-auto">
-              Thank you for joining. Check your inbox soon for your exclusive 10% discount code.
+            <p className="text-neutral-500 max-w-md mx-auto font-sans font-light">
+              Thank you for joining our inner circle. Check your inbox soon for your exclusive 10% discount code.
             </p>
           </div>
         ) : (
           <>
-            <h2 className="font-display text-4xl md:text-6xl font-medium uppercase mb-8 tracking-tighter">
-              Get 10% off <br /> your first order
+            <h2 className="font-display text-5xl md:text-7xl font-medium uppercase mb-10 tracking-tighter leading-[0.9]">
+              Get 10% off <br /> <span className="italic font-light opacity-80">your first</span> order
             </h2>
-            <p className="text-neutral-500 text-base md:text-lg font-light mb-12 max-w-lg mx-auto leading-relaxed">
-              Join our mailing list for exclusive access to new arrivals, private sales, and fashion editorials.
+            <p className="text-neutral-400 text-base md:text-lg font-light mb-16 max-w-lg mx-auto leading-relaxed font-sans">
+              Join our mailing list for exclusive access to new arrivals, private sales, and seasonal fashion editorials.
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 max-w-xl mx-auto border border-black/10 focus-within:border-black transition-colors duration-500">
               <Input
                 type="email"
-                placeholder="YOUR EMAIL ADDRESS"
+                placeholder="ENTER YOUR EMAIL"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-14 rounded-none border-border bg-transparent px-6 text-xs uppercase tracking-widest focus-visible:ring-black"
+                className="h-16 rounded-none border-none bg-transparent px-8 text-[10px] uppercase tracking-[0.3em] focus-visible:ring-0 flex-1"
               />
               <Button
                 type="submit"
-                className="h-14 px-8 rounded-none uppercase tracking-[0.2em] text-xs font-bold transition-all"
+                className="h-16 px-12 rounded-none uppercase tracking-[0.3em] text-[10px] font-bold transition-all bg-black text-white hover:bg-neutral-800 shrink-0"
               >
-                Subscribe
-                <ArrowRight className="ml-2 w-4 h-4" />
+                Join Now
               </Button>
             </form>
 
-            <p className="mt-6 text-[10px] uppercase tracking-widest text-neutral-300">
-              No spam. Unsubscribe at any time.
+            <p className="mt-8 text-[9px] uppercase tracking-[0.4em] text-neutral-300 font-medium">
+              Privacy guaranteed. Unsubscribe at any time.
             </p>
           </>
         )}
