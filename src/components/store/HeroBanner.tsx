@@ -27,28 +27,37 @@ export function HeroBanner() {
   }, [])
 
   return (
-    <section className="relative h-[calc(100vh-110px)] min-h-[600px] w-full overflow-hidden bg-white">
+    <section className="relative h-[calc(100vh-70px)] min-h-[600px] w-full overflow-hidden bg-white">
       {/* Slider Background */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1.03 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '-100%' }}
+          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           className="absolute inset-0 z-0"
         >
-          <Image
-            src={SLIDES[currentSlide].image}
-            alt={SLIDES[currentSlide].title}
-            fill
-            priority
-            className="object-cover"
-          />
-          {/* Triple Overlays for Premium Look */}
-          <div className="absolute inset-0 bg-black/30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <div className="relative h-full w-full overflow-hidden">
+            <motion.div
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1.02 }}
+              transition={{ duration: 6.4, ease: "linear" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={SLIDES[currentSlide].image}
+                alt={SLIDES[currentSlide].title}
+                fill
+                priority
+                className="object-cover"
+              />
+            </motion.div>
+            {/* Triple Overlays for Premium Look */}
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          </div>
         </motion.div>
       </AnimatePresence>
 

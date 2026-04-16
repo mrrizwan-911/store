@@ -1,0 +1,16 @@
+export const MOCK_PRODUCTS = Array.from({ length: 8 }, (_, i) => ({
+  id: `prod_${i + 1}`,
+  name: ['Linen Dress Shirt', 'Slim Fit Chinos', 'Leather Oxford', 'Cotton Kurta', 'Silk Blouse', 'Wool Blazer', 'Sneaker Hi-Top', 'Embroidered Dupatta'][i],
+  slug: `product-${i + 1}`,
+  imageUrl: `https://placehold.co/400x500/141414/E8D5B0?text=Product+${i + 1}`,
+  secondaryImageUrl: `https://placehold.co/400x500/222222/C9A96E?text=Product+${i + 1}+Alt`,
+  category: ['Clothes', 'Clothes', 'Shoes', 'Apparel', 'Clothes', 'Clothes', 'Shoes', 'Accessories'][i],
+  price: [4500, 3200, 8900, 2800, 5600, 12000, 7500, 1800][i],
+  salePrice: i % 3 === 0 ? [3500, 2500, 7000, 2000, 4500, 10000, 6000, 1500][i] : undefined,
+  avgRating: 4.2 + (i % 5) * 0.1,
+  reviewCount: 12 + i * 7,
+  isBadgeNew: i < 2,
+  isBadgeSale: i % 3 === 0,
+  isLowStock: i === 2,
+  stockCount: i === 2 ? 3 : 15,
+}))

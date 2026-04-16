@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { ReduxProvider } from "@/components/shared/ReduxProvider";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -29,7 +30,9 @@ export default function RootLayout({
       className={`${playfair.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body bg-background text-text-primary">
-        {children}
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
         <Toaster />
       </body>
     </html>

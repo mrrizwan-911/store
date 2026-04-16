@@ -52,18 +52,15 @@ export function Navbar() {
   return (
     <header className={cn(
       "sticky top-0 z-50 w-full transition-all duration-300 border-b border-gray-100 bg-white/95 backdrop-blur-xl",
-      isScrolled ? "py-2" : "py-4"
+      isScrolled ? "py-1" : "py-2"
     )}>
       <div className="mx-auto max-w-7xl px-8">
-        <div className="flex h-[74px] items-center gap-6">
+        <div className="flex h-[40px] items-center gap-6">
 
           {/* Logo Area */}
-          <Link href="/" className="shrink-0 group cursor-pointer flex flex-col">
-            <span className="block font-serif text-2xl font-semibold tracking-[0.2em] text-black uppercase transition-all group-hover:tracking-[0.25em]">
+          <Link href="/" className="shrink-0 group cursor-pointer flex items-center">
+            <span className="font-serif text-2xl font-bold tracking-[0.1em] text-black uppercase transition-all group-hover:tracking-[0.15em] leading-none">
               STORE
-            </span>
-            <span className="block text-[9px] uppercase tracking-[0.4em] text-gray-400 font-sans mt-0.5">
-              Curated modern wardrobe
             </span>
           </Link>
 

@@ -17,6 +17,8 @@
 /.next/
 .claude/
 /out/
+/tests/
+/test-results/
 
 # production
 /build
