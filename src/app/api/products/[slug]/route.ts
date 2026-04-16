@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db/client'
+import { logger } from '@/lib/utils/logger'
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
+  logger.request('GET /api/products/[slug]', { slug })
 
   try {
     const product = await db.product.findUnique({
@@ -36,7 +38,7 @@ export async function GET(
       data: { ...product, avgRating, reviewCount: product.reviews.length },
     })
   } catch (error) {
-    console.error('Error fetching product:', error)
+    logger.error('[GET /api/products/[slug]]', error, { slug })
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 })
   }
 }

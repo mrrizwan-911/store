@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db/client'
 import { verifyAccessToken } from '@/lib/auth/jwt'
 import { reviewSchema } from '@/lib/validations/products'
+import { logger } from '@/lib/utils/logger'
 
 export async function POST(
   req: NextRequest,
@@ -41,6 +42,7 @@ export async function POST(
     }
 
     const body = await req.json()
+    logger.request('POST /api/products/[slug]/reviews', { slug, userId, body })
     const parsed = reviewSchema.safeParse(body)
 
     if (!parsed.success) {
@@ -72,7 +74,7 @@ export async function POST(
 
     return NextResponse.json({ success: true, data: review }, { status: 201 })
   } catch (error) {
-    console.error('Error creating review:', error)
+    logger.error('[POST /api/products/[slug]/reviews]', error, { slug, userId })
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 })
   }
 }

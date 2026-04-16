@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db/client'
 import { productFilterSchema } from '@/lib/validations/products'
+import { logger } from '@/lib/utils/logger'
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
+  logger.request('GET /api/products', { params: Object.fromEntries(searchParams.entries()) })
 
   const parsedParams = productFilterSchema.safeParse(Object.fromEntries(searchParams.entries()))
 
@@ -88,7 +90,7 @@ export async function GET(req: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Error fetching products:', error)
+    logger.error('[GET /api/products]', error)
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 })
   }
 }
