@@ -12,13 +12,12 @@
 
 # testing
 /coverage
+/test-results/
 
 # next.js
 /.next/
 .claude/
 /out/
-/tests/
-/test-results/
 
 # production
 /build
@@ -44,3 +43,4 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+playwright-report/
