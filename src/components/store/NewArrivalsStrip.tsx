@@ -21,43 +21,49 @@ export function NewArrivalsStrip() {
 
   return (
     <section className="py-24 overflow-hidden bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 mb-12 flex items-end justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mb-16 flex items-end justify-between">
         <div className="space-y-4">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold block">
+          <span className="text-[10px] uppercase tracking-[0.5em] text-neutral-400 font-bold block ml-1">
             Just In
           </span>
-          <h2 className="font-display text-4xl md:text-5xl font-medium text-black uppercase tracking-tight">
-            New Arrivals
+          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl font-medium text-black uppercase tracking-tight leading-[0.9]">
+            New <br className="hidden md:block" /> Arrivals
           </h2>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-4 mb-2">
           <button
             onClick={() => scroll('left')}
-            className="w-12 h-12 bg-[#FAFAFA] flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300"
+            className="w-12 h-12 border border-neutral-100 flex items-center justify-center bg-white text-neutral-800 hover:bg-black hover:text-white transition-all duration-500 rounded-none shadow-sm"
             aria-label="Scroll left"
           >
-            <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
+            <ChevronLeft className="w-5 h-5 stroke-[1.25]" />
           </button>
           <button
             onClick={() => scroll('right')}
-            className="w-12 h-12 bg-[#FAFAFA] flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300"
+            className="w-12 h-12 border border-neutral-100 flex items-center justify-center bg-white text-neutral-800 hover:bg-black hover:text-white transition-all duration-500 rounded-none shadow-sm"
             aria-label="Scroll right"
           >
-            <ChevronRight className="w-5 h-5 stroke-[1.5]" />
+            <ChevronRight className="w-5 h-5 stroke-[1.25]" />
           </button>
         </div>
       </div>
 
       <div
         ref={scrollContainerRef}
-        className="flex gap-6 md:gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-[calc((100vw-80rem)/2+1.5rem)] pb-4"
+        className="flex gap-8 md:gap-12 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-12 scroll-smooth"
       >
+        {/* Padding Spacer for start */}
+        <div className="min-w-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] h-1" />
+
         {arrivals.map((product) => (
-          <div key={product.id} className="min-w-[280px] md:min-w-[350px] snap-start">
+          <div key={product.id} className="min-w-[280px] sm:min-w-[320px] md:min-w-[380px] snap-start">
             <ProductCard {...product} />
           </div>
         ))}
+
+        {/* Padding Spacer for end */}
+        <div className="min-w-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] h-1" />
       </div>
     </section>
   )

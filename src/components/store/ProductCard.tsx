@@ -100,8 +100,8 @@ export function ProductCard({
           <button
             onClick={handleWishlist}
             className={cn(
-              "w-9 h-9 flex items-center justify-center bg-white/90 border-none transition-all hover:bg-black hover:text-white shadow-sm",
-              isInWishlist && "bg-black text-white"
+              "w-9 h-9 flex items-center justify-center bg-white/95 text-neutral-600 transition-all hover:bg-black hover:text-white shadow-sm border border-neutral-100",
+              isInWishlist && "bg-black text-white border-black"
             )}
             aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
@@ -109,7 +109,7 @@ export function ProductCard({
           </button>
           <button
             onClick={handleAddToCart}
-            className="w-9 h-9 flex items-center justify-center bg-white/90 border-none transition-all hover:bg-black hover:text-white shadow-sm"
+            className="w-9 h-9 flex items-center justify-center bg-white/95 text-neutral-600 transition-all hover:bg-black hover:text-white shadow-sm border border-neutral-100"
             aria-label="Add to cart"
           >
             <ShoppingBag className="w-4 h-4" />
@@ -119,14 +119,14 @@ export function ProductCard({
         {/* Quick Add Button */}
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-0 left-0 right-0 bg-white py-3 text-[10px] font-bold uppercase tracking-[0.15em] transition-transform duration-300 translate-y-full group-hover:translate-y-0 border-t border-black/5 hover:bg-black hover:text-white"
+          className="absolute bottom-0 left-0 right-0 bg-white text-black py-4 text-[10px] font-bold uppercase tracking-[0.15em] transition-transform duration-500 translate-y-full group-hover:translate-y-0 border-t border-neutral-100 hover:bg-black hover:text-white z-20 shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.05)]"
         >
           Quick Add — PKR {(salePrice || price).toLocaleString()}
         </button>
       </div>
 
       {/* Product Details */}
-      <div className="pt-4 pb-2 flex flex-col gap-1">
+      <div className="pt-4 pb-4 px-4 flex flex-col gap-1.5">
         <div className="flex justify-between items-center">
           <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">
             {category}

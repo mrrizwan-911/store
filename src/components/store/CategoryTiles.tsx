@@ -5,16 +5,12 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 
-import clothesImg from '@/assets/images/clothes.jpg'
-import apparelImg from '@/assets/images/apparel.jpg'
-import accessoriesImg from '@/assets/images/accessories.jpg'
-
 export function CategoryTiles() {
   const categories = [
     {
       name: 'Clothes',
       slug: 'clothes',
-      image: clothesImg,
+      image: '/images/clothes_category.jpg',
       gridClass: 'col-span-12 md:col-span-6 md:row-span-2',
       textClass: 'text-6xl md:text-8xl',
       showSubtitle: true,
@@ -33,7 +29,7 @@ export function CategoryTiles() {
     {
       name: 'Apparel',
       slug: 'apparel',
-      image: apparelImg,
+      image: '/images/apparel.webp',
       gridClass: 'col-span-6 md:col-span-3 md:row-span-1',
       textClass: 'text-2xl',
       overlayClass: 'bg-black/20 group-hover:bg-black/30',
@@ -42,7 +38,7 @@ export function CategoryTiles() {
     {
       name: 'Accessories',
       slug: 'accessories',
-      image: accessoriesImg,
+      image: '/images/accessories.webp',
       gridClass: 'col-span-6 md:col-span-3 md:row-span-1',
       textClass: 'text-2xl',
       overlayClass: 'bg-black/20 group-hover:bg-black/30',
@@ -67,6 +63,7 @@ export function CategoryTiles() {
               alt={cat.name}
               fill
               className="object-cover transition-transform duration-[1200ms] ease-in-out group-hover:scale-110"
+              priority={cat.name === 'Clothes'}
             />
             {/* Overlay */}
             <div

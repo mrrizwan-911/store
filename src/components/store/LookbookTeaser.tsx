@@ -5,39 +5,48 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export function LookbookTeaser() {
-  return (
-    <section className="bg-black py-24 text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+  const lookbook1 = '/images/lookbook1.webp'
+  const lookbook2 = '/images/lookbook2.jpg'
+  const lookbook3 = '/images/lookbook3.jpg'
 
-          {/* Images Grid */}
-          <div className="grid grid-cols-2 gap-4 relative">
-            <div className="aspect-[3/4] relative overflow-hidden mt-16 group cursor-pointer">
+  return (
+    <section className="bg-black py-32 text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">
+
+          {/* Abstract Editorial Images Grid */}
+          <div className="relative h-[550px] md:h-[750px] flex items-center">
+            {/* Image 1 - Top Staggered */}
+            <div className="absolute left-0 top-0 w-1/2 aspect-[3/4] z-10 group overflow-hidden border border-white/5 shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=800"
-                alt="Lookbook Model 1"
+                src={lookbook1}
+                alt="Lookbook Editorial 1"
                 fill
                 className="object-cover transition-transform duration-[2000ms] group-hover:scale-110"
               />
+              <div className="absolute inset-0 bg-black/10 transition-all group-hover:bg-black/0" />
             </div>
-            <div className="aspect-[3/4] relative overflow-hidden group cursor-pointer">
+
+            {/* Image 2 - Middle Staggered (Down) */}
+            <div className="absolute left-[20%] top-[20%] w-1/2 aspect-[3/4] z-20 group overflow-hidden border border-white/10 shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800"
-                alt="Lookbook Model 2"
+                src={lookbook2}
+                alt="Lookbook Editorial 2"
                 fill
                 className="object-cover transition-transform duration-[2000ms] group-hover:scale-110"
               />
+              <div className="absolute inset-0 bg-black/20 transition-all group-hover:bg-black/5" />
             </div>
-            {/* Absolute detail element */}
-            <div className="hidden md:block absolute -right-4 top-1/2 -translate-y-1/2 w-48 h-64 border border-white/5 p-2 z-10 backdrop-blur-md bg-white/5 transition-all duration-700 hover:scale-105">
-              <div className="relative w-full h-full grayscale hover:grayscale-0 transition-all duration-700">
-                <Image
-                  src="https://images.unsplash.com/photo-1485230895905-ec17ba36b580?auto=format&fit=crop&q=80&w=400"
-                  alt="Detail"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+
+            {/* Image 3 - Bottom Staggered (Up) */}
+            <div className="absolute right-0 bottom-0 w-1/2 aspect-[3/4] z-30 group overflow-hidden border border-white/10 shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
+              <Image
+                src={lookbook3}
+                alt="Lookbook Editorial 3"
+                fill
+                className="object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 transition-all group-hover:bg-black/10" />
             </div>
           </div>
 
@@ -63,15 +72,15 @@ export function LookbookTeaser() {
             </Link>
 
             <div className="mt-24 flex gap-12 border-t border-white/10 pt-12">
-              <div className="space-y-2">
+              <div className="space-y-2 text-center md:text-left">
                 <p className="text-3xl font-medium font-display italic">12+</p>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-bold">Styles curated</p>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 text-center md:text-left">
                 <p className="text-3xl font-medium font-display italic">Weekly</p>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-bold">New Arrivals</p>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 text-center md:text-left">
                 <p className="text-3xl font-medium font-display italic">Pure</p>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-bold">Linen & Silk</p>
               </div>
