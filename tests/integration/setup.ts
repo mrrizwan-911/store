@@ -29,10 +29,14 @@ async function truncateDb() {
   if (tables.length > 0) {
     const tableNames = tables.map((t) => `"${t.tablename}"`).join(', ')
     try {
+      logger.info('Truncating tables: ' + tableNames)
       await db.$executeRawUnsafe(`TRUNCATE TABLE ${tableNames} CASCADE;`)
+      logger.info('Database truncated successfully')
     } catch (error) {
       logger.error('Failed to truncate tables', error, { tableNames })
     }
+  } else {
+    logger.warn('No tables found to truncate')
   }
 }
 
