@@ -51,15 +51,15 @@ export function Navbar() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full transition-all duration-300 border-b",
-      isScrolled ? "bg-white/95 backdrop-blur-xl border-gray-100 py-2" : "bg-white border-gray-100 py-4"
+      "sticky top-0 z-50 w-full transition-all duration-300 border-b border-gray-100 bg-white/95 backdrop-blur-xl",
+      isScrolled ? "py-2" : "py-4"
     )}>
       <div className="mx-auto max-w-7xl px-8">
         <div className="flex h-[74px] items-center gap-6">
 
           {/* Logo Area */}
           <Link href="/" className="shrink-0 group cursor-pointer flex flex-col">
-            <span className="block font-display text-2xl font-semibold tracking-[0.2em] text-black uppercase transition-all group-hover:tracking-[0.25em]">
+            <span className="block font-serif text-2xl font-semibold tracking-[0.2em] text-black uppercase transition-all group-hover:tracking-[0.25em]">
               STORE
             </span>
             <span className="block text-[9px] uppercase tracking-[0.4em] text-gray-400 font-sans mt-0.5">
