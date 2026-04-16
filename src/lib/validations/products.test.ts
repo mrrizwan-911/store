@@ -59,13 +59,38 @@ describe('productFilterSchema', () => {
     }
   })
 
-  it('should transform featured other strings to boolean false', () => {
-    const input = { featured: 'false' }
+  it('should transform featured other strings to undefined', () => {
+    const input = { featured: 'maybe' }
     const result = productFilterSchema.safeParse(input)
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.featured).toBe(false)
+      expect(result.data.featured).toBeUndefined()
     }
+  })
+
+  it('should validate that page and limit are positive integers', () => {
+    expect(productFilterSchema.safeParse({ page: '0' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ page: '-1' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ page: '1.5' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ page: '1' }).success).toBe(true)
+
+    expect(productFilterSchema.safeParse({ limit: '0' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ limit: '-5' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ limit: '10.2' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ limit: '10' }).success).toBe(true)
+  })
+
+  it('should validate that maxPrice >= minPrice', () => {
+    expect(productFilterSchema.safeParse({ minPrice: '100', maxPrice: '50' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ minPrice: '100', maxPrice: '100' }).success).toBe(true)
+    expect(productFilterSchema.safeParse({ minPrice: '100', maxPrice: '200' }).success).toBe(true)
+  })
+
+  it('should fail for invalid numeric strings', () => {
+    expect(productFilterSchema.safeParse({ page: 'abc' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ limit: 'not-a-number' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ minPrice: 'expensive' }).success).toBe(false)
+    expect(productFilterSchema.safeParse({ maxPrice: '100.00.00' }).success).toBe(false)
   })
 
   it('should handle optional parameters', () => {
