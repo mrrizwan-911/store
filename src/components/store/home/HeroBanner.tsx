@@ -53,6 +53,7 @@ export function HeroBanner() {
                 alt={SLIDES[currentSlide].title}
                 fill
                 priority
+                sizes="100vw"
                 className="object-cover"
               />
             </motion.div>

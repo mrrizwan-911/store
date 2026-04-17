@@ -1,6 +1,6 @@
 'use client'
 
-import { ProductCard } from './ProductCard'
+import { ProductCard } from '../shared/ProductCard'
 import { MOCK_PRODUCTS } from '@/lib/utils/mockData'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'

@@ -26,7 +26,11 @@ export async function GET(req: NextRequest) {
     featured,
   } = parsedParams.data
 
-  const [sortField, sortDir] = sort.split('_') as [string, 'asc' | 'desc']
+  let [sortField, sortDir] = sort.split('_') as [string, 'asc' | 'desc']
+
+  // Map generic sort fields to database columns
+  if (sortField === 'price') sortField = 'basePrice'
+  if (sortField === 'date') sortField = 'createdAt'
 
   const where = {
     isActive: true,
@@ -76,6 +80,7 @@ export async function GET(req: NextRequest) {
 
       return {
         ...p,
+        slug: p.slug,
         avgRating,
         reviewCount: p.reviews.length,
         reviews: undefined,

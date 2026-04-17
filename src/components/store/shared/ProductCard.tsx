@@ -72,11 +72,12 @@ export function ProductCard({
     >
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden bg-[#FAFAFA]">
-        <Link href={`/products/${slug}`} className="block h-full w-full">
+        <Link href={`/products/${slug}`} className="block h-full w-full relative">
           <Image
             src={(isHovered && secondaryImageUrl) ? secondaryImageUrl : imageUrl}
             alt={name}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
           />
         </Link>

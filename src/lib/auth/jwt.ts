@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
-
 interface TokenPayload {
   userId: string
   email: string
   role: string
+  jti?: string
 }
 
 export function signAccessToken(payload: TokenPayload): string {
@@ -11,7 +11,9 @@ export function signAccessToken(payload: TokenPayload): string {
 }
 
 export function signRefreshToken(payload: TokenPayload): string {
-  return jwt.sign(payload, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' })
+  // Add a unique ID to each refresh token to ensure it's unique even if generated in the same second
+  const rotatedPayload = { ...payload, jti: globalThis.crypto.randomUUID() }
+  return jwt.sign(rotatedPayload, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' })
 }
 
 export function verifyAccessToken(token: string): TokenPayload {

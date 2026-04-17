@@ -3,9 +3,15 @@ import { db } from '@/lib/db/client'
 import { logger } from '@/lib/utils/logger'
 import { otpEmailTemplate } from './templates/otp'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 export async function sendOtpEmail(email: string, name: string, code: string): Promise<void> {
+  if (!resend) {
+    logger.warn('RESEND_API_KEY is missing. Skipping email send in development.', { email, code })
+    // In dev/test without API key, we still want the flow to continue
+    return
+  }
+
   const { error } = await resend.emails.send({
     from: 'noreply@yourdomain.com',
     to: email,

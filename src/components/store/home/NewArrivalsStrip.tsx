@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { ProductCard } from './ProductCard'
+import { ProductCard } from '../shared/ProductCard'
 import { MOCK_PRODUCTS } from '@/lib/utils/mockData'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 

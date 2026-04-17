@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { name, email, password } = parsed.data
+    const { name, full_name, fullName, email, password } = parsed.data
+    const finalName = name || full_name || fullName || 'User'
 
     const existingUser = await db.user.findUnique({ where: { email } })
     if (existingUser) {
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     const passwordHash = await bcrypt.hash(password, 12)
     const user = await db.user.create({
-      data: { name, email, passwordHash, role: 'CUSTOMER' },
+      data: { name: finalName, email, passwordHash, role: 'CUSTOMER' },
     })
 
     // 6-digit OTP, valid for 10 minutes
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
       data: { userId: user.id, code, expiresAt },
     })
 
-    await sendOtpEmail(email, name, code)
+    await sendOtpEmail(email, finalName, code)
 
     logger.auth('User registered', { userId: user.id, email })
 
