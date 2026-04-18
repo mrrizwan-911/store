@@ -1,10 +1,5 @@
 import { z } from 'zod'
 
-export const validateCouponSchema = z.object({
-  code: z.string().min(1, 'Coupon code is required').toUpperCase(),
-  orderValue: z.number().min(0, 'Order value must be positive'),
-})
-
 export const couponSchema = z.object({
   code: z.string().min(3, "Code must be at least 3 characters").toUpperCase(),
   type: z.enum(['PERCENTAGE', 'FLAT']),
