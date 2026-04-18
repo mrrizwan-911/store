@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 import { db } from '@/lib/db/client';
 import { signAccessToken } from '@/lib/auth/jwt';
 import { GET, POST } from '@/app/api/admin/coupons/route';
+import { PATCH, DELETE } from '@/app/api/admin/coupons/[id]/route';
 
 let testToken: string;
 
@@ -123,11 +124,115 @@ describe('Admin Coupons API', () => {
     const req = createReq('/api/admin/coupons', 'GET', undefined, testToken);
     const res = await GET(req);
     const json = await res.json();
-    
+
     expect(res.status).toBe(200);
     expect(json.success).toBe(true);
     expect(json.data.length).toBe(2);
     expect(json.data.some((c: any) => c.code === 'WELCOME10')).toBe(true);
     expect(json.data.some((c: any) => c.code === 'FLAT500')).toBe(true);
+  });
+
+  it('should partially update a coupon (toggle isActive)', async () => {
+    const coupon = await db.coupon.create({
+      data: {
+        code: 'TOGGLE_ME',
+        discountPct: 15,
+        isActive: true
+      }
+    });
+
+    const req = createReq(`/api/admin/coupons/${coupon.id}`, 'PATCH', {
+      isActive: false
+    }, testToken);
+
+    const res = await PATCH(req, { params: { id: coupon.id } });
+    const json = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(json.success).toBe(true);
+    expect(json.data.isActive).toBe(false);
+
+    // Verify in db
+    const updated = await db.coupon.findUnique({ where: { id: coupon.id } });
+    expect(updated?.isActive).toBe(false);
+  });
+
+  it('should fully update a coupon', async () => {
+    const coupon = await db.coupon.create({
+      data: {
+        code: 'UPDATE_ME',
+        discountPct: 15,
+        isActive: true
+      }
+    });
+
+    const req = createReq(`/api/admin/coupons/${coupon.id}`, 'PATCH', {
+      code: 'UPDATED_CODE',
+      type: 'FLAT',
+      discountValue: 100,
+      isActive: true
+    }, testToken);
+
+    const res = await PATCH(req, { params: { id: coupon.id } });
+    const json = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(json.success).toBe(true);
+    expect(json.data.code).toBe('UPDATED_CODE');
+    expect(json.data.discountFlat).toBe('100');
+    expect(json.data.discountPct).toBeNull();
+  });
+
+  it('should prevent updating a coupon to an existing code', async () => {
+    await db.coupon.create({
+      data: {
+        code: 'EXISTING_CODE',
+        discountPct: 10,
+        isActive: true
+      }
+    });
+
+    const couponToUpdate = await db.coupon.create({
+      data: {
+        code: 'UPDATING_CODE',
+        discountPct: 20,
+        isActive: true
+      }
+    });
+
+    const req = createReq(`/api/admin/coupons/${couponToUpdate.id}`, 'PATCH', {
+      code: 'EXISTING_CODE', // Already exists
+      type: 'PERCENTAGE',
+      discountValue: 20,
+      isActive: true
+    }, testToken);
+
+    const res = await PATCH(req, { params: { id: couponToUpdate.id } });
+    const json = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(json.success).toBe(false);
+    expect(json.error).toBe('Coupon code already exists');
+  });
+
+  it('should delete a coupon', async () => {
+    const coupon = await db.coupon.create({
+      data: {
+        code: 'DELETE_ME',
+        discountPct: 5,
+        isActive: true
+      }
+    });
+
+    const req = createReq(`/api/admin/coupons/${coupon.id}`, 'DELETE', undefined, testToken);
+    const res = await DELETE(req, { params: { id: coupon.id } });
+    const json = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(json.success).toBe(true);
+
+    // Verify in db
+    const deleted = await db.coupon.findUnique({ where: { id: coupon.id } });
+    expect(deleted).toBeNull();
   });
 });
