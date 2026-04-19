@@ -112,23 +112,24 @@ export function CouponFormDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[425px] bg-white rounded-none border-[#E5E5E5]">
+      <DialogContent data-testid="coupon-modal" className="sm:max-w-[425px] bg-white rounded-none border-[#E5E5E5]">
         <DialogHeader>
-          <DialogTitle className="font-playfair text-xl">
+          <DialogTitle className="font-display text-xl">
             {editingCoupon ? 'Edit Coupon' : 'Create Coupon'}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={onSubmit} className="space-y-4 pt-4">
+        <form onSubmit={onSubmit} className="space-y-4 pt-4 font-body">
           <div className="space-y-2">
             <Label>Coupon Code</Label>
             <div className="flex gap-2">
               <Input
                 required
+                data-testid="coupon-code-input"
                 value={formData.code}
                 onChange={(e) => setFormData({...formData, code: e.target.value.toUpperCase()})}
-                className="rounded-none border-[#E5E5E5] focus-visible:ring-black uppercase"
+                className="rounded-none border-[#E5E5E5] focus-visible:ring-black uppercase font-body"
               />
-              <Button type="button" variant="outline" onClick={generateCode} className="rounded-none">
+              <Button type="button" variant="outline" onClick={generateCode} className="rounded-none font-body">
                 Auto
               </Button>
             </div>
@@ -143,11 +144,11 @@ export function CouponFormDialog({
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="PERCENTAGE" id="pct" />
-                <Label htmlFor="pct">Percentage</Label>
+                <Label htmlFor="pct" className="font-body">Percentage</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="FLAT" id="flat" />
-                <Label htmlFor="flat">Flat Amount</Label>
+                <Label htmlFor="flat" className="font-body">Flat Amount</Label>
               </div>
             </RadioGroup>
           </div>
@@ -161,7 +162,7 @@ export function CouponFormDialog({
               max={formData.type === 'PERCENTAGE' ? "100" : undefined}
               value={formData.discountValue}
               onChange={(e) => setFormData({...formData, discountValue: e.target.value})}
-              className="rounded-none border-[#E5E5E5] focus-visible:ring-black"
+              className="rounded-none border-[#E5E5E5] focus-visible:ring-black font-body"
             />
           </div>
 
@@ -174,7 +175,7 @@ export function CouponFormDialog({
                 placeholder="Optional"
                 value={formData.minOrderValue}
                 onChange={(e) => setFormData({...formData, minOrderValue: e.target.value})}
-                className="rounded-none border-[#E5E5E5] focus-visible:ring-black"
+                className="rounded-none border-[#E5E5E5] focus-visible:ring-black font-body"
               />
             </div>
             <div className="space-y-2">
@@ -185,7 +186,7 @@ export function CouponFormDialog({
                 placeholder="Unlimited"
                 value={formData.maxUses}
                 onChange={(e) => setFormData({...formData, maxUses: e.target.value})}
-                className="rounded-none border-[#E5E5E5] focus-visible:ring-black"
+                className="rounded-none border-[#E5E5E5] focus-visible:ring-black font-body"
               />
             </div>
           </div>
@@ -196,7 +197,7 @@ export function CouponFormDialog({
               type="date"
               value={formData.expiresAt}
               onChange={(e) => setFormData({...formData, expiresAt: e.target.value})}
-              className="rounded-none border-[#E5E5E5] focus-visible:ring-black"
+              className="rounded-none border-[#E5E5E5] focus-visible:ring-black font-body"
             />
           </div>
 
@@ -206,10 +207,10 @@ export function CouponFormDialog({
               checked={formData.isActive}
               onCheckedChange={(val: boolean) => setFormData({...formData, isActive: val})}
             />
-            <Label htmlFor="active">Active Coupon</Label>
+            <Label htmlFor="active" className="font-body">Active Coupon</Label>
           </div>
 
-          <Button disabled={loading} type="submit" className="w-full bg-black text-white hover:bg-zinc-800 rounded-none mt-4">
+          <Button data-testid="coupon-submit-btn" disabled={loading} type="submit" className="w-full bg-black text-white hover:bg-zinc-800 rounded-none mt-4 font-body">
             {loading ? 'Saving...' : 'Save Coupon'}
           </Button>
         </form>

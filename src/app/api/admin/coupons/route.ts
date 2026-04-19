@@ -6,7 +6,8 @@ import { couponSchema } from '@/lib/validations/coupon';
 
 export async function GET(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const authRes = await requireAdmin(req);
+    if (authRes instanceof NextResponse) return authRes;
 
     const coupons = await db.coupon.findMany({
       orderBy: { createdAt: 'desc' },
@@ -20,13 +21,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const authRes = await requireAdmin(req);
+    if (authRes instanceof NextResponse) return authRes;
 
     const body = await req.json();
     const parsed = couponSchema.safeParse(body);
     
     if (!parsed.success) {
-      return NextResponse.json({ success: false, error: parsed.error.errors[0].message }, { status: 400 });
+      return NextResponse.json({ success: false, error: parsed.error.issues[0].message }, { status: 400 });
     }
 
     const { code, type, discountValue, minOrderValue, maxUses, expiresAt, isActive } = parsed.data;
@@ -52,7 +54,12 @@ export async function POST(req: NextRequest) {
     logger.info(`Coupon created: ${code}`);
     return NextResponse.json({ success: true, data: coupon }, { status: 201 });
   } catch (err: any) {
-    logger.error('CREATE_COUPON_ERROR', err);
+    logger.error('CREATE_COUPON_ERROR', {
+      message: err.message,
+      stack: err.stack,
+      code: err.code,
+      meta: err.meta
+    });
     return NextResponse.json({ success: false, error: err.message }, { status: err.status || 500 });
   }
 }

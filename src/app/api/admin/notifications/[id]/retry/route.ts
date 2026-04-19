@@ -5,12 +5,12 @@ import { logger } from '@/lib/utils/logger'
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const authRes = await requireAdmin(req)
   if (authRes instanceof NextResponse) return authRes
 
-  const { id } = params
+  const { id } = await params
 
   try {
     const log = await db.emailLog.findUnique({

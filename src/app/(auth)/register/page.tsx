@@ -48,7 +48,7 @@ export default function RegisterPage() {
       router.push(`/verify-otp?userId=${result.data.userId}&email=${encodeURIComponent(formData.email)}`);
     } catch (error) {
       if (error instanceof ZodError) {
-        toast.error(error.errors[0].message);
+        toast.error(error.issues[0].message);
       } else if (error instanceof Error) {
         toast.error(error.message);
       } else {

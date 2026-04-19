@@ -2,16 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
   const authHeader = req.headers.get('authorization')
-  const accessToken = authHeader?.replace('Bearer ', '')
+  let token = authHeader?.replace('Bearer ', '')
+
+  if (!token) {
+    token = req.cookies.get('refreshToken')?.value
+  }
 
   if (pathname.startsWith('/admin')) {
-    if (!accessToken) {
+    if (!token) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
     try {
       // Simple base64 decode for Edge runtime since jsonwebtoken is Node-only
       // Full verification happens in API routes
-      const payload = JSON.parse(atob(accessToken.split('.')[1]))
+      const payload = JSON.parse(atob(token.split('.')[1]))
       if (payload.role !== 'ADMIN') {
         return NextResponse.redirect(new URL('/', req.url))
       }
@@ -21,12 +25,12 @@ export function proxy(req: NextRequest) {
   }
 
   if (pathname.startsWith('/account') || pathname.startsWith('/checkout')) {
-    if (!accessToken) {
+    if (!token) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
     try {
       // Optimistic check in Proxy
-      atob(accessToken.split('.')[1])
+      atob(token.split('.')[1])
     } catch {
       return NextResponse.redirect(new URL('/login', req.url))
     }

@@ -55,7 +55,8 @@ const LoyaltyFilters = () => {
     });
   };
 
-  const handleTierChange = (value: string) => {
+  const handleTierChange = (value: string | null) => {
+    if (!value) return;
     setTier(value);
     updateUrl('tier', value);
   };
@@ -68,7 +69,7 @@ const LoyaltyFilters = () => {
           placeholder="Search members by name or email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 rounded-none border-[#E5E5E5] focus-visible:ring-0 focus-visible:border-[#000000] h-10 bg-[#FFFFFF] text-sm"
+          className="pl-10 rounded-none border-[#E5E5E5] focus-visible:ring-0 focus-visible:border-[#000000] h-10 bg-[#FFFFFF] text-sm font-body"
         />
         {isPending && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -79,10 +80,10 @@ const LoyaltyFilters = () => {
 
       <div className="w-full md:w-56">
         <Select value={tier} onValueChange={handleTierChange}>
-          <SelectTrigger className="rounded-none border-[#E5E5E5] focus:ring-0 focus:border-[#000000] h-10 w-full bg-[#FFFFFF] text-sm">
+          <SelectTrigger className="rounded-none border-[#E5E5E5] focus:ring-0 focus:border-[#000000] h-10 w-full bg-[#FFFFFF] text-sm font-body">
             <SelectValue placeholder="All Tiers" />
           </SelectTrigger>
-          <SelectContent className="rounded-none border-[#E5E5E5] bg-[#FFFFFF]">
+          <SelectContent className="rounded-none border-[#E5E5E5] bg-[#FFFFFF] font-body">
             <SelectItem value="all" className="rounded-none focus:bg-[#FAFAFA] text-sm">All Tiers</SelectItem>
             <SelectItem value="BRONZE" className="rounded-none focus:bg-[#FAFAFA] text-sm">Bronze</SelectItem>
             <SelectItem value="SILVER" className="rounded-none focus:bg-[#FAFAFA] text-sm">Silver</SelectItem>

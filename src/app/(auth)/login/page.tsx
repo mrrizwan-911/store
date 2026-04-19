@@ -63,7 +63,7 @@ export default function LoginPage() {
       router.push('/');
     } catch (error) {
       if (error instanceof ZodError) {
-        toast.error(error.errors[0].message);
+        toast.error(error.issues[0].message);
       } else if (error instanceof Error) {
         toast.error(error.message);
       } else {
@@ -106,7 +106,7 @@ export default function LoginPage() {
               <Label htmlFor="password" className="text-[10px] uppercase font-bold tracking-widest text-black">
                 Password
               </Label>
-              <Link href="/forgot-password" size="sm" className="text-[10px] uppercase tracking-widest text-[#737373] hover:text-black">
+              <Link href="/forgot-password" className="text-[10px] uppercase tracking-widest text-[#737373] hover:text-black">
                 Forgot?
               </Link>
             </div>

@@ -98,36 +98,36 @@ export default function CouponsClient({ initialCoupons }: { initialCoupons: Coup
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-playfair text-3xl font-semibold tracking-tight text-black">Coupons</h1>
-        <Button onClick={openNew} className="bg-black text-white hover:bg-zinc-800 rounded-none">
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-black">Coupons</h1>
+        <Button onClick={openNew} data-testid="create-coupon-btn" className="bg-black text-white hover:bg-zinc-800 rounded-none">
           <Plus className="mr-2 h-4 w-4" /> Create Coupon
         </Button>
       </div>
 
       <div className="border border-[#E5E5E5] bg-white">
-        <table className="w-full text-sm text-left">
+        <table className="w-full text-sm text-left font-body">
           <thead className="bg-[#FAFAFA] border-b border-[#E5E5E5] text-black">
             <tr>
-              <th className="px-6 py-4 font-medium">Code</th>
-              <th className="px-6 py-4 font-medium">Type</th>
-              <th className="px-6 py-4 font-medium">Discount</th>
-              <th className="px-6 py-4 font-medium">Min Order</th>
-              <th className="px-6 py-4 font-medium">Uses</th>
-              <th className="px-6 py-4 font-medium">Expires</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
+              <th className="px-6 py-4 font-medium font-display">Code</th>
+              <th className="px-6 py-4 font-medium font-display">Type</th>
+              <th className="px-6 py-4 font-medium font-display">Discount</th>
+              <th className="px-6 py-4 font-medium font-display">Min Order</th>
+              <th className="px-6 py-4 font-medium font-display">Uses</th>
+              <th className="px-6 py-4 font-medium font-display">Expires</th>
+              <th className="px-6 py-4 font-medium font-display">Status</th>
+              <th className="px-6 py-4 font-medium font-display text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
             {coupons.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-6 py-8 text-center text-[#737373]">
+                <td colSpan={8} className="px-6 py-8 text-center text-[#737373] font-body">
                   No coupons yet. Create your first one.
                 </td>
               </tr>
             ) : (
               coupons.map((coupon) => (
-                <tr key={coupon.id} className="border-b border-[#E5E5E5] last:border-0 hover:bg-[#FAFAFA]/50 transition-colors">
+                <tr key={coupon.id} data-testid="coupon-row" className="border-b border-[#E5E5E5] last:border-0 hover:bg-[#FAFAFA]/50 transition-colors">
                   <td className="px-6 py-4 font-medium">{coupon.code}</td>
                   <td className="px-6 py-4">{coupon.discountPct ? 'Percentage' : 'Flat'}</td>
                   <td className="px-6 py-4">
@@ -140,15 +140,16 @@ export default function CouponsClient({ initialCoupons }: { initialCoupons: Coup
                   </td>
                   <td className="px-6 py-4">
                     <Switch
+                      data-testid="status-switch"
                       checked={coupon.isActive}
                       onCheckedChange={() => toggleActive(coupon.id, coupon.isActive)}
                     />
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button onClick={() => openEdit(coupon)} className="text-[#737373] hover:text-black mr-3">
+                    <button onClick={() => openEdit(coupon)} data-testid="edit-coupon-btn" className="text-[#737373] hover:text-black mr-3">
                       <Edit2 className="h-4 w-4" />
                     </button>
-                    <button onClick={() => deleteCoupon(coupon.id)} className="text-[#737373] hover:text-red-500">
+                    <button onClick={() => deleteCoupon(coupon.id)} data-testid="delete-coupon-btn" className="text-[#737373] hover:text-red-500">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </td>
